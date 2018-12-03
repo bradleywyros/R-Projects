@@ -41,8 +41,7 @@ date_changed.plot <- ggplot(data = inactive.sept17) +
   geom_freqpoly(mapping = aes(x = DATE_CHANGED), binwidth = 1) + 
   scale_x_date(date_labels="%Y", date_breaks  = "1 year") +
   theme(axis.text.x=element_text(angle=45, hjust=1)) +
-  labs(title = "Voter Status 'Inactive' from September 2017 GA Voter File", 
-       x = "Date Changed", y = "Registrations Changed", subtitles = "Total Voters: 6,421,489\nInactive Voters: 606,205") + 
+  labs(x = "Date Changed", y = "Registrations Changed", subtitles = "Total Voters: 6,421,489\nInactive Voters: 606,205") + 
   annotate("text",
            x = as.Date(c("2015-08-08", "2015-10-05", "2017-08-09"), "%Y-%m-%d"),
            y = c(131000, 111000, 138000),
@@ -88,7 +87,7 @@ spike.bar <- ggplot(data = spike) +
                 label = paste0(format(Percent,digits=1, nsmall=2) , '%')),  
             position = position_dodge(width = .9), 
             size = 4) +
-  labs(title = "Voters in August 9th, 2017 Spike", y = "Percent", 
+  labs(x = "Voters in spike", y = "Percent in spike", 
        subtitle = "Total voters: 6,421,489\nInactive voters: 606,205\nVoters in spike: 137,158") + 
   scale_fill_manual(values = c("blue", "orange"), guide = FALSE) +
   scale_x_discrete(limits = c("Total", "Inactive")) +
@@ -142,7 +141,7 @@ total_inactive_spike.bar <- ggplot(data = total_inactive_spike.2, mapping = aes(
                 label = paste0(format(Percent,digits = 0, nsmall = 1), '%')),    # prettify
             position = position_dodge(width = .9), 
             size = 2) +
-  labs(title = "Racial Breakdown by Subsets of Entire Voter File", y = "Percent",
+  labs(x = "Voter Group", y = "Group Percentage",
        subtitle = "Total voters: 6,421,489\nInactive voters: 606,205\nVoters in spike: 137,158") +
   scale_fill_discrete(name = "Race",
                       labels= c("American Indian or\nAlaskan Native", "Asian or\nPacific Islander", 
@@ -221,8 +220,8 @@ voted.bar <- ggplot(data = voted) +
                 label = paste0(format(Percent,digits=1, nsmall=2) , '%')),  
             position = position_dodge(width = .9), 
             size = 4) +
-  labs(title = "Voted in 2016 General Election and in The Spike", y = "Percent", 
-       subtitle = "Total voted: 3,727,094Voted inactive: 64,104\nVoted in spike: 47,931") + 
+  labs(x = "Voted in 2016 General Election and in spike", y = "Percent in spike", 
+       subtitle = "Total voted: 3,727,094\nVoted inactive: 64,104\nVoted in spike: 47,931") + 
   scale_fill_manual(values = c("blue", "orange", "light blue"), guide = FALSE) +
   scale_x_discrete(limits = c("Total", "Inactive", "In Spike")) +
   scale_y_continuous(labels = percent_format(scale = 1))
@@ -268,7 +267,7 @@ total_inactive_spike.voted.bar <- ggplot(data = total_inactive_spike.voted.2, ma
                 label = paste0(format(Percent,digits = 0, nsmall = 1), '%')),    # prettify
             position = position_dodge(width = .9), 
             size = 2) +
-  labs(title = "Racial Breakdown of 2016 General Election Day Voters\nby Subsets of Entire Voter File", y = "Percent",
+  labs(x = "2016 General Election Voter Group", y = "Group Percentage",
        subtitle = "Total voted: 3,727,094\nVoted inactive: 64,104\nVoted in spike: 47,931") +
   scale_x_discrete(limits = c("Spike", "Inactive", "Total")) +
   scale_fill_discrete(name = "Race",
@@ -308,11 +307,11 @@ purged
 
 purged.bar <- ggplot(data = purged) + 
   geom_bar(mapping = aes(x = Voters, y = Percent, fill = Voters), stat = "identity") +
-  geom_text(aes(x = Voters, y = Percent + .05,
+  geom_text(aes(x = Voters, y = Percent + .03,
                 label = paste0(format(Percent,digits=1, nsmall=2) , '%')),  
             position = position_dodge(width = .9), 
             size = 4) +
-  labs(title = "Purged between Sept. and Nov. 2017 and in the Spike", y = "Percent", 
+  labs(x = "Voters purged in spike", y = "Percent in spike", 
        subtitle = "Total purged: 24,021\nInactive and purged: 2,676\nPurged in spike: 919") + 
   scale_fill_manual(values = c("blue", "orange", "light blue"), guide = FALSE) +
   scale_x_discrete(limits = c("Total", "Inactive", "In Spike")) +
@@ -358,11 +357,11 @@ format(purged_inactive_spike.2, digits=2, nsmall=2)
 
 purged_inactive_spike.bar <- ggplot(data = purged_inactive_spike.2, mapping = aes(x = Voters, y = Percent, fill = RACE)) +
   geom_bar(stat="identity", position = position_dodge()) +
-  geom_text(aes(y = Percent + 1.3,    # nudge above top of bar
+  geom_text(aes(y = Percent + 1.5,    # nudge above top of bar
                 label = paste0(format(Percent,digits = 0, nsmall = 1), '%')),   
             position = position_dodge(width = .9), 
             size = 2) +
-  labs(title = "Racial Breakdown of Purged Voters by Subsets of Entire Voter File", y = "Percent",
+  labs(x = "Purged Voter Group", y = "Group Percentage",
        subtitle = "Total purged: 24,021\nTotal inactive purged: 2,676\nPurged in spike: 919") +
   scale_x_discrete(limits = c("Spike", "Inactive", "Total")) +
   scale_fill_discrete(name = "Race",
@@ -406,8 +405,8 @@ voted_and_purged.bar <- ggplot(data = voted_and_purged) +
                 label = paste0(format(Percent,digits=1, nsmall=2) , '%')),  
             position = position_dodge(width = .9), 
             size = 4) +
-  labs(title = "Purged, Voted on Election Day 2016, and in the Spike", 
-       y = "Percent", subtitle = "Total voted and purged: 8,429\nInactive, voted, and purged: 295\nIn spike, voted, and purged: 243") + 
+  labs(x = "Purged 2016 General Election Voters in spike", 
+       y = "Percent in spike", subtitle = "Total voted and purged: 8,429\nInactive, voted, and purged: 295\nIn spike, voted, and purged: 243") + 
   scale_fill_manual(values = c("blue", "orange", "light blue"), guide = FALSE) +
   scale_x_discrete(limits = c("Total", "Inactive", "In Spike")) +
   scale_y_continuous(labels = percent_format(scale = 1, accuracy = 0.01))
@@ -450,11 +449,11 @@ format(voted_purged_inactive.2, digits=2, nsmall=2)
 
 voted_purged_inactive.bar <- ggplot(data = voted_purged_inactive.2, mapping = aes(x = Voters, y = Percent, fill = RACE)) +
   geom_bar(stat="identity", position = position_dodge()) +
-  geom_text(aes(y = Percent + 2,    
+  geom_text(aes(y = Percent + 1.7,    
                 label = paste0(format(Percent,digits = 0, nsmall = 1), '%')),   
             position = position_dodge(width = .9), 
             size = 2) +
-  labs(title = "Racial Breakdown of 2016 General Election Day Voters\nand Purged by Subsets of Entire Voter File", y = "Percent",
+  labs(x = "Purged 2016 General Election Voter Group", y = "Group Percentage",
        subtitle = "Total voted and purged: 8,429\nInactive, voted, and purged: 295\nIn spike, voted, and purged: 243") +
   scale_x_discrete(limits = c("Spike", "Inactive","Total")) +
   scale_fill_discrete(name = "Race",
